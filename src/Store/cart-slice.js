@@ -21,12 +21,10 @@ const cartSlice = createSlice({
       //   1.Check if the item is already in the cart
       if (itemIndex === -1) {
         //   2.if not: Just add new item
-        console.log('new item');
         state.items.push(action.payload);
         state.totalQuantity += action.payload.qty;
       } else {
         //   3.if yes: update the item
-        console.log('alrady in array');
         state.items[itemIndex].qty += action.payload.qty;
         state.totalQuantity += action.payload.qty;
       }
