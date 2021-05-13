@@ -16,7 +16,6 @@ const ProductItem = props => {
       description: description,
       qty: 1,
     };
-    console.log(cartStore);
     dispatch(cartAction.addItem(item));
   };
 

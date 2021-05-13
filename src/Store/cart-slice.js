@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { uiAction } from './ui-slice';
 
 const cartSlice = createSlice({
   name: 'cartItems',
@@ -45,6 +46,48 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const sendCartData = cartState => {
+  return async dispatch => {
+    dispatch(
+      uiAction.showNotification({
+        title: 'Sending...',
+        message: 'Sending request...',
+        status: 'pending',
+      })
+    );
+    const sendRequest = async () => {
+      const response = await fetch(
+        'https://oval-time-307222-default-rtdb.firebaseio.com/cart.json',
+        {
+          method: 'PUT',
+          body: JSON.stringify(cartState),
+        }
+      );
+      if (!response.ok) {
+        throw new Error('failed to upload');
+      }
+    };
+    try {
+      await sendRequest();
+      dispatch(
+        uiAction.showNotification({
+          title: 'Success...',
+          message: 'Cart is sent successfuly...',
+          status: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        uiAction.showNotification({
+          title: 'Error...',
+          message: 'Error...',
+          status: 'error',
+        })
+      );
+    }
+  };
+};
 
 export const cartAction = cartSlice.actions;
 
