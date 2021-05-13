@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cartAction } from '../../Store/cart-slice';
 
 const ProductItem = props => {
-  const { title, price, description } = props;
+  const { title, price, description, id } = props;
   const dispatch = useDispatch();
   const cartStore = useSelector(state => state.cartStore);
 
   const addToCartHandler = () => {
     const item = {
-      id: 1,
+      id: id,
       name: title,
       price: price,
       description: description,
